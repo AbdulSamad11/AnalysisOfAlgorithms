@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!DOCTYPE graph PUBLIC "-//FC//DTD red//EN" "../dtd/graph.dtd">
+<!-- Peralta Santa Anna Victor Miguel -->
+
+<graph direct="0">
+
+    <vertex label="V0"	/>
+    <vertex label="V1"	/>
+    <vertex label="V2"	/>
+    <vertex label="V3"	/>
+    <vertex label="V4"	/>
+    <vertex label="V5"	/>
+    
+    <edge source="V0" 	target="V1 " 	weight="2"/>
+    <edge source="V0 " 	target="V5 " 	weight="5"/>
+    <edge source="V0 " 	target="V3 " 	weight="6"/>
+    <edge source="V4 " 	target="V1 " 	weight="10"/>
+    <edge source="V4 " 	target="V5 " 	weight="6"/>
+    <edge source="V4 " 	target="V3 "	weight="8"/>
+    <edge source="V4 " 	target="V2 " 	weight="7"/>
+    <edge source="V5 " 	target="V3 " 	weight="5"/>
+  
+</graph>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!DOCTYPE graph PUBLIC "-//FC//DTD red//EN" "../dtd/graph.dtd">
+
+<graph direct="1">
+
+    <vertex label="V0"/>
+    <vertex label="V1"/>
+    <vertex label="V2"/>
+    <vertex label="V3"/>
+    <vertex label="V4"/>
+    <vertex label="V5"/>
+
+    <edge source="V0" target="V1" weight="1"/>
+    <edge source="V0" target="V4" weight="1"/>
+    <edge source="V1" target="V2" weight="1"/>
+    <edge source="V1" target="V3" weight="1"/>
+    <edge source="V1" target="V4" weight="1"/>
+    <edge source="V2" target="V3" weight="1"/>
+    <edge source="V5" target="V2" weight="1"/>
+    <edge source="V5" target="V4" weight="1"/>
+    
+</graph>

@@ -1,0 +1,162 @@
+<!-- 
+Una nota importante
+siempre que se abre un tag <algo> debe ir seguido de </algo> 
+además no se puede cerrar un tag si no se han cerrado los previos
+
+es decir:
+
+MAL
+<tag1> 
+<tag2> 
+</tag1>        ESTÁ MAL DEBIDO A QUE NO SE HA CERRADO EL TAG2
+
+<tag1>
+<tag2>
+</tag1>        es incorrecto debido a que primero se debe tener un tag
+</tag2>		   que cierre a tag 2 y luego uno que cierre a tag1
+
+BIEN	
+<tag1>
+<tag2>
+</tag2>
+</tag1>
+ 
+una forma de ahorrarse el escribir un tag de cerrado, el cuál sólo funciona si es una línea es:
+
+<tag1 />
+      ^
+      |
+      este simbolo cierra el tag cuando sólo es una línea debido a que si son más es necesario poner 2 tags(uno que abra y otro que cierre)	
+-->
+
+
+<!-- 
+recuerden que para llamar a estas propiedades debe ser ${nombre_propiedad}
+
+empezamos el archivo build.xml con:
+name: el nombre del proyecto
+ 
+default: diciéndole cuál queremos que sea el target por default(si uno ejecuta ant sin ningún target éste se ejecutará)
+
+basedir: corresponde a partir de qué ruta se considerarán las rutas que se den en cualquier parte de este archivo
+-->
+<project name="ProyectoPrueba" default="run" basedir="." >
+	<!-- 
+	una descripción, si se desea poner	
+	-->
+	<description>
+		Ejemplo para ED
+	</description>
+
+
+<!--Propiedades globales del archivo
+ estas propiedades son válidas para todo el archivo 
+	
+Las ventajas de estas propiedades es:
+si se desea cambiar alguna propiedad sólo se cambia una línea
+evita errores al no tener que repetir las rutas
+-->
+
+<!--Definimos la propiedad src que será el directorio donde se colocarán los archivos .java (con sus respectivos paquetes).-->
+<property name="src" value="src"/> 
+<!--Definimos cuál será el directorio donde se colocarán los archivos en bytecode(.class) -->
+<property name="classes" value="build/classes"/>
+<!--Definimos dónde se colocará la documentación.-->
+<property name="doc" value="build/docs"/>
+<!--Definimos cuál será la clase principal(que tiene el metodo main) -->
+<property name="main" value="practica5.Dijkstra"/>
+
+
+<target name="init">
+<!--Crea la marca de tiempo con los valores por defecto, estos se pueden modificar(verificar la página de ant)-->
+	<tstamp/>
+<!-- Crea el directorio objetivo de la compilación-->
+	<mkdir dir="${classes}"/>
+<!-- Crea el directorio donde se colocará la documentación-->
+	<mkdir dir="${doc}"/>
+</target> <!--aquí termina el target -->
+
+<!-- 
+target que se encarga de la compilación
+depends: le indica a ant si depende de que algún target para que se ejecute	
+-->
+<target name="compile" depends="init" description="compila el codigo" >
+	<javac srcdir="${src}" destdir="${classes}" includeantruntime="false"/>
+</target>
+
+<!--
+target que se encarga de borrar la carpeta build
+-->
+
+<target name="clean" description="elimina el directorio build " >
+	<delete dir="build"/> 
+</target>
+
+<!-- 
+target que se encarga de generar la documentación
+-->
+<target name="doc" depends="compile" description="genera javadoc">
+<mkdir dir="${doc}"/>
+	
+	<!-- si se desea usar algún paquete, que no esté por defecto se debe agregar packagesnames=* para incluir todos o los nombres de los paquetes separados por comas -->
+	<javadoc sourcepath="${src}"
+ 		 	 destdir="${doc}">
+					
+
+		<!--
+		si se tiene en el paquete por defecto usar esta linea
+		-->
+
+		<!--
+		<fileset dir="${src}" defaultexcludes="no">
+			<include name="**"/>
+		</fileset>
+		-->
+
+	</javadoc>
+</target>
+
+<!--
+Ejecuta el código 
+-->
+<target name="run" depends="compile" description="corre el programa">
+	<java classname="${main}" fork="true">
+		<classpath>
+			<pathelement path="${classes}"/>
+		</classpath>
+	</java>
+</target>
+
+<!--
+Ejecuta TODOS los targerts anteriores
+
+NOTA
+hay que tener cuidado que se ejecutan en el orden en el que se definan, si se hace clean después de compile se tendrá un error en run porque no hay clases compiladas
+-->
+<target name="all" depends=" clean, compile, doc,run">
+ </target>
+</project>
+
+
+
+
+
+
+
+
+<!--
+NOTA FINAL si se desea se pueden crear el archivo .jar
+<target name="jar" depends="compile">
+	<jar destfile="nombre_jar.jar" basedir="build">
+		<manifest>
+			<attribute name="Main-Class" value="practica0.Ventana"/>
+		</manifest>
+	</jar>
+</target>
+
+<target name="run" depends="compile, jar">
+	<java jar="nombre_jar.jar" fork="true"/>
+</target>
+
+todo esto sin olvidar que el target clean debe incluir <delete file="nombre_jar.jar"
+-->
